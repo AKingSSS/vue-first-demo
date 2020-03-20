@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="username">
+    <button @click="reg">注册</button>
+    <p>{{msg}}</p>
+</div>
+<script>
+    /*
+        接口2：用户注册
+        请求地址：https://autumnfish.cn/api/user/reg
+        请求方法：post
+        请求参数：username(用户名，字符串）
+        响应内容：注册成功或者失败
+     */
+    let url = 'https://autumnfish.cn/api/user/reg';
+    let app = new Vue({
+        el: "#app",
+        data: {
+            username:"",
+            msg:""
+        },
+        methods: {
+                reg: function() {
+                axios.post(url,{"username":this.username}).then((response) =>{
+                    console.log("response.data = " + response.data);
+                    this.msg = response.data;
+                }, function (err) {
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>

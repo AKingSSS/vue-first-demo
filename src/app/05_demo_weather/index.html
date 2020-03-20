@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="city" placeholder="请输入查询的城市" @keyup.enter="searchWeather">
+    <button @click="searchWeather">搜索</button>
+    <div>
+        <a href="javascript:;" @click="changeCity('北京')">北京</a>
+        <a href="javascript:;" @click="changeCity('上海')">上海</a>
+        <a href="javascript:;" @click="changeCity('广州')">广州</a>
+        <a href="javascript:;" @click="changeCity('深圳')">深圳</a>
+    </div>
+</div>
+<script>
+    /*
+        请求地址：http://wthrcdn.etouch.cn/weather_mini
+        请求方法：get
+        请求参数：city(城市名)
+        响应内容：天气信息
+     */
+    var app = new Vue({
+        el: "#app",
+        data: {
+            city:"",
+            msg:""
+        },
+        methods: {
+            searchWeather: function () {
+                console.log(this.city);
+                axios.get('http://wthrcdn.etouch.cn/weather_mini?city=' + this.city).then(function (response) {
+                    console.log("response = " + response);
+                }, function (err) {
+                    console.log(err);
+                })
+            },
+            changeCity: function (city) {
+                this.city = city;
+                this.searchWeather();
+            }
+        },
+
+    })
+</script>
+</body>
+</html>

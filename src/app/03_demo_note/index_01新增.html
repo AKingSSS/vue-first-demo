@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="app">
+    <h1>Python大星的笔记本</h1>
+    <input type="text" v-on:keyup.enter="add" placeholder="请输入任务" v-model="inputValue">
+    <ul>
+        <li v-for="(todo,index) in list">
+            <span>{{index + 1}}</span>
+            <label>{{todo}}</label>
+        </li>
+    </ul>
+    <span><strong>0</strong> items left</span>
+    <button>clear</button>
+</div>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            list: ["写代码", "吃饭饭", "睡觉觉"],
+            inputValue: "好好学习天天向上"
+        },
+        methods: {
+            add:function () {
+                this.list.push(this.inputValue)
+            }
+
+        }
+    })
+</script>
+</body>
+</html>

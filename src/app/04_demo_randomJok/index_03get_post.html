@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="获取笑话" @click="getJoke">
+    <p>{{joke}}</p>
+    <input type="text" ref="username">
+    <button @click="reg">注册</button>
+    <p>{{msg}}</p>
+
+</div>
+<script>
+    /*
+        接口1：随机获取一条笑话
+        请求地址：https://autumnfish.cn/api/joke
+        请求方法：get
+        请求参数：无
+        响应内容：随机笑话
+     */
+    /*
+        接口2：用户注册
+        请求地址：https://autumnfish.cn/api/user/reg
+        请求方法：post
+        请求参数：username(用户名，字符串）
+        响应内容：注册成功或者失败
+     */
+    var app = new Vue({
+        el: "#app",
+        data: {
+            joke: "笑话",
+            msg:""
+        },
+        methods: {
+            getJoke: function () {
+                // console.log(this.joke);
+                const that = this;
+                axios.get('https://autumnfish.cn/api/joke').then(function (response) {
+                    console.log("response.data = " + response.data)
+                    that.joke = response.data;
+                }, function (err) {
+                })
+            },
+            reg:function () {
+                const that = this;
+                axios.post('https://autumnfish.cn/api/user/reg',{"username":this.$refs.username.value}).then(function (response) {
+                    // console.log(response.data);
+                    that.msg = response.data;
+                },function (err) {
+                    console.log(err)
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>
